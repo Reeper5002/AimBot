@@ -9,6 +9,12 @@ class AntiCheat(private val cfg: AimConfig.AntiCheat) {
 
     private val rand = Random(System.nanoTime())
 
+    /** Random float in [min, max) - replacement for non-existent nextFloat(min,max) */
+    private fun randFloat(min: Float, max: Float): Float {
+        if (max <= min) return min
+        return min + rand.nextFloat() * (max - min)
+    }
+
     /**
      * Transforms a raw correction (dx, dy) into a "humanized" sequence
      * of micro-moves that get injected one-by-one with random delays.
@@ -29,8 +35,9 @@ class AntiCheat(private val cfg: AimConfig.AntiCheat) {
             var jx = 0f
             var jy = 0f
             if (cfg.jitterEnabled) {
-                jx = rand.nextFloat(-cfg.jitterMaxPx.toFloat(), cfg.jitterMaxPx.toFloat())
-                jy = rand.nextFloat(-cfg.jitterMaxPx.toFloat(), cfg.jitterMaxPx.toFloat())
+                val jitterMax = cfg.jitterMaxPx.toFloat()
+                jx = randFloat(-jitterMax, jitterMax)
+                jy = randFloat(-jitterMax, jitterMax)
             }
 
             val qx = (portionX + jx).roundToQuantum(cfg.correctionQuantum)
@@ -64,8 +71,8 @@ class AntiCheat(private val cfg: AimConfig.AntiCheat) {
     /** Micro-wiggle when idle (prevents "static aim" detection) */
     fun idleWiggle(): Pair<Float, Float> {
         if (rand.nextFloat() > cfg.microCorrectionChance) return 0f to 0f
-        val angle = rand.nextFloat(0f, 6.28f)
-        val amp = rand.nextFloat(1f, cfg.idleWiggleAmpPx.toFloat())
+        val angle = randFloat(0f, 6.28f)
+        val amp = randFloat(1f, cfg.idleWiggleAmpPx.toFloat())
         return (amp * kotlin.math.cos(angle.toDouble()).toFloat()) to
                (amp * kotlin.math.sin(angle.toDouble()).toFloat())
     }
