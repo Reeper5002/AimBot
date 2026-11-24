@@ -1,7 +1,9 @@
 package com.aimbot.project
 
-import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
+val chan = NotificationChannel("aim", "AimBot",
+            NotificationManager.IMPORTANCE_LOW)
 import android.app.Service
 import android.content.Context
 import android.content.Intent
