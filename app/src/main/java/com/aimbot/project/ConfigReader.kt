@@ -160,18 +160,18 @@ object ConfigReader {
 
     private fun parseTracking(o: JSONObject) = AimConfig.Tracking(
         o.optBoolean("enabled", true),
-        o.optFloat("smoothFactor", 0.4f),
+        o.optDouble("smoothFactor", 0.4).toFloat(),
         o.optBoolean("reverseCorrection", true),
         o.optInt("reverseMaxOffsetPx", 180),
         o.optInt("maxCorrectionPerFramePx", 14),
         o.optInt("velocityWindow", 6),
-        o.optFloat("minVelocityToTrack", 30f),
+        o.optDouble("minVelocityToTrack", 30.0).toFloat(),
         o.optBoolean("predictEnabled", true),
         o.optInt("predictMaxMs", 45),
-        o.optFloat("predictSmooth", 0.75f),
-        o.optFloat("sprintMultiplier", 1.6f),
+        o.optDouble("predictSmooth", 0.75).toFloat(),
+        o.optDouble("sprintMultiplier", 1.6).toFloat(),
         o.optBoolean("fly3DPredict", true),
-        o.optFloat("airControlCompensation", 0.3f),
+        o.optDouble("airControlCompensation", 0.3).toFloat(),
         o.optInt("stopDecayMs", 200)
     )
 
@@ -198,10 +198,10 @@ object ConfigReader {
         o.optInt("defaultScopeOutMs", 250),
         o.optBoolean("sniperLockEnabled", true),
         o.optInt("sniperLockRadiusPx", 55),
-        o.optFloat("sniperSnugness", 0.85f),
+        o.optDouble("sniperSnugness", 0.85).toFloat(),
         o.optBoolean("closeRangeLock", true),
         o.optInt("closeRangePx", 400),
-        o.optFloat("closeRangeSnugness", 0.95f),
+        o.optDouble("closeRangeSnugness", 0.95).toFloat(),
         o.optBoolean("noLoseUntilDown", true),
         o.optBoolean("maintainLockThroughRecoil", true),
         o.optInt("postShotReacquireMs", 100)
@@ -213,7 +213,7 @@ object ConfigReader {
         intArray(o, "timingRandomizeMs"),
         o.optInt("batchSizeMin", 1),
         o.optInt("batchSizeMax", 3),
-        o.optFloat("microCorrectionChance", 0.35f),
+        o.optDouble("microCorrectionChance", 0.35).toFloat(),
         o.optInt("correctionQuantum", 2),
         o.optInt("idleWiggleMs", 800),
         o.optInt("idleWiggleAmpPx", 3),
@@ -228,14 +228,14 @@ object ConfigReader {
         colorsArray(o, "enemyColors"),
         o.optInt("enemyMinSizePx", 8),
         o.optBoolean("headDetection", true),
-        o.optFloat("headSizeRatio", 0.3f),
+        o.optDouble("headSizeRatio", 0.3).toFloat(),
         colorsArray(o, "teamColor"),
         o.optBoolean("ignoreAllies", true),
         o.optInt("colorTolerance", 35)
     )
 
     private fun parseInput(o: JSONObject) = AimConfig.Input(
-        o.optFloat("sensitivity", 1.0f),
+        o.optDouble("sensitivity", 1.0).toFloat(),
         o.optInt("downsampleFactor", 1),
         o.optInt("maxTouchX", 1080),
         o.optInt("maxTouchY", 2340),
