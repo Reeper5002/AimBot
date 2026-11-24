@@ -1,11 +1,9 @@
 package com.aimbot.project
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-val chan = NotificationChannel("aim", "AimBot",
-            NotificationManager.IMPORTANCE_LOW)
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
@@ -15,7 +13,6 @@ import android.util.Log
 import android.view.InputDevice
 import android.view.MotionEvent
 import android.media.projection.MediaProjectionManager
-import kotlinx.parcelize.Parcelize
 import kotlin.math.hypot
 import java.util.concurrent.Executors
 
@@ -170,7 +167,7 @@ class AimBotService : Service() {
         finally { event.recycle() }
     }
 
-    @Suppress("DEPRECATION", "UnspecifiedRegisterReceiverFlag")
+    @Suppress("DEPRECATION")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // MediaProjection result arriving from MainActivity
         if (!projectionStarted && intent?.hasExtra("resultCode") == true) {
